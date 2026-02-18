@@ -51,13 +51,21 @@ The analysis is anchored on **7 Core KPIs** developed to assess fleet health:
 
 ---
 
-## 🧹 Methodology & Cleaning
-The data pipeline was executed entirely in Google Sheets (`RawDataset` -> `Cleaned`):
-1.  **Imputation:** Missing `Coal Stock` values were imputed with 0 to maintain calculation integrity.
-2.  **Standardization:** Removed underscores from station names and standardized date formats.
-3.  **Feature Engineering:** * Created `Capacity_Category` to segment "High" vs "Low" performers.
-    * Derived `Zero_Gen_Flag` to isolate the 70 critical failure events.
-4.  **Assumptions:** Blank outage values were treated as 0 MW (fully operational).
+# Data Cleaning & Preparation
+Data was cleaned and transformed in **Google Sheets**, transitioning from `RawDataset.csv` to `Cleaned.csv`.
+## Key Steps
+- **Missing Values**
+  - Coal Stock (2,042 missing) filled with `0` or `"Not Available"`.
+  - Capacity under outage (7 nulls) replaced with `0`.
+- **Outlier Handling**
+  - Calculated `Daily_Capacity_Factor`.
+  - Flagged values >100% or ~0% using `Zero_Gen_Flag`.
+- **Transformations**
+  - Standardized date formats.
+  - Cleaned station names into `Station_Clean`.
+- **Feature Engineering**
+  - Created `Daily_Capacity_Factor`, `Capacity_Category` (High/Low), and `Zero_Gen_Flag`.
+The final dataset (`Cleaned.csv`) is structured and ready for analysis.
 
 ---
 
@@ -70,40 +78,28 @@ The data pipeline was executed entirely in Google Sheets (`RawDataset` -> `Clean
 
 ---
 
-## 📈 Dashboard Summary
-The project includes a dynamic Google Sheets dashboard featuring:
-
-* **Top Line KPI Strip:** Instant view of the 7 core metrics (Gen, DCF, Outage, etc.).
-* **Trend Analysis:** Line charts tracking generation growth (2017–2026).
-* **Seasonality Analysis:** Bar charts identifying the August dip.
-* **State-wise Performance:** **Stacked Bar Chart** comparing Monitored vs. Available Capacity to highlight state-specific inefficiencies.
-* **Interactive Slicers:** Filter by Year, Month, State, Station, and Capacity Category.
-
----
-
-## 🚀 Recommendations & Business Impact
-
-### Proposed Actions
-1.  **Performance Turnaround:** Target the bottom 25% "Low Capacity" units for immediate overhaul.
-2.  **Technical Task Force:** Deploy a specialist team to **Uttar Pradesh** to address the high outage volume.
-3.  **Zero-Gen RCA:** Mandate Root Cause Analysis within 24 hours for any "Zero Generation" event.
-4.  **Strategic Maintenance:** Align all major annual overhauls strictly with the **August** low-demand window.
-
-### Estimated Impact
-By reducing cumulative outages (607,137 MW) by just **10%**, NTPC can recover **~1,457 Million Units (MU)** of energy. At a rate of ₹40 Lakhs/MU, this translates to:
-
-### **₹582.8 Crores** *Potential Revenue Recovery*
-
----
-
-## 🔮 Future Scope
-* **Predictive ML:** Integration of vibration/sensor data to predict boiler failures before they occur.
-* **Logistics Integration:** Incorporating railway supply chain data to model coal stock volatility.
-
----
-
-## 📜 Repository Structure
-* `Power_Generation_Analysis_Report.docx` - Full project report.
-* `DVA Capstone - Dashboard.csv` - Dashboard data source.
-* `DVA Capstone - clean_data.csv` - The processed dataset used for analysis.
-* `DVA Capstone - Calculated_Pivots.csv` - Aggregated data for charts.
+## Dashboard Summary
+A comprehensive dashboard was built in **Google Sheets** using the cleaned dataset.
+## Top KPI Strip
+Displays 7 key metrics:
+- **High Cap Share:** 26.97%
+- **Total Generation:** 49,620.6
+- **Average DCF:** 65.9%
+- **Outage:** 607k
+- **Available Capacity:** 2.4M
+- **Monitored Capacity:** 3.0M
+- **Zero Generation Events:** 70
+## Visualizations
+- **Year-wise Trend:** Line chart showing generation growth over time.
+- **Month-wise Seasonality:** Column chart highlighting seasonal dips (notably August).
+- **State-wise Performance:** Stacked bar chart comparing Monitored vs. Available Capacity.
+- **Capacity Category Analysis:** Donut/Pie chart showing 26.97% High Capacity share.
+- **Zero Generation & Outage:** Chart analyzing 70 critical failure events.
+- **Station Performance:** Bar chart/table of top and bottom performing stations.
+## Interactive Filters
+- Year  
+- Month  
+- State  
+- Station Name  
+- Capacity Category  
+The dashboard enables dynamic performance tracking and multi-level analysis.
